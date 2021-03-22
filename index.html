@@ -1,0 +1,115 @@
+<style>
+  /*.line-canvas {
+    height: 100px;
+    width: 100px;
+    position: absolute;   // Declared as static
+  }*/
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  </head>
+  <body>
+
+    <canvas id="line0.0" class="line-canvas" height="100px" width="100px" style="border:1px solid #d3d3d3;"></canvas>
+    <canvas id="line0.1" class="line-canvas" height="100px" width="100px" style="border:1px solid #d3d3d3;"></canvas>
+
+    <canvas id="line1.0" class="line-canvas" height="100px" width="100px" style="border:1px solid #d3d3d3;"></canvas>
+    <canvas id="line1.1" class="line-canvas" height="100px" width="100px" style="border:1px solid #d3d3d3;"></canvas>
+
+  </body>
+
+</html>
+
+
+<script>
+
+ /* function lineStruct(canvasID, xpos, ypos) {
+    this.canvasID = canvasID;
+    this.xpos = xpos;
+    this.ypos = ypos;
+  }*/
+
+  let canvasWidth = 100;
+  let canvasHeight = 100;
+  let numRows = 2;
+ /*  let numCols = 2;
+
+  let linesArr = [];
+  for (let r=0; r<numRows; r++) {
+    for (let c=0; c<numCols; c++) {
+      linesArr[r*numCols + c] = new Object();
+      linesArr[r*numCols + c].canvasID = "line"+r.toString()+"."+c.toString();
+     // linesArr.push(new lineStruct("line"+r.toString()+"."+c.toString(), 0, 0));
+      console.log(linesArr[r*numCols + c]);
+    }
+  }*/
+
+/*  function setCanvasPositions() {
+    for (let r=0; r<numRows; r++) {
+      for (let c=0; c<numCols; c++) {
+        let can = document.getElementById(linesArr[r*numCols + c]);
+        let xpos = c*canvasWidth;
+        let xString = xpos.toString();
+        let ypos = r*canvasHeight;
+        let yString = ypos.toString();
+        can.style.top = yString+"px";
+        can.style.left = xString+"px";
+      }
+    }
+  }
+  */
+  let mouseX;
+  let mouseY;
+
+    // Getting the mouse coordinates
+    document.addEventListener("mousemove", (event) => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+    console.log("x: " + mouseX + " y: " + mouseY);
+  });
+
+  function initCanvas(c, ctx) {
+    ctx.clearRect(0, 0, 200, 100);
+    ctx.beginPath();
+  }
+
+  function drawLine(lineID, color, lineWid, x1, y1, x2, y2) {
+
+    let c = document.getElementById(lineID);
+    let ctx = c.getContext("2d");
+    initCanvas(c, ctx);
+    ctx.strokeStyle = color;
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.lineWidth = lineWid;
+    ctx.stroke();
+  }
+
+
+  const sleep = (ms) => {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	const draw = async() => {
+		while(true)
+		{
+			await sleep(20);
+
+			drawLine("line0.0", "#FF0000", 8, canvasWidth - mouseX, canvasHeight - mouseY, mouseX, mouseY);
+      drawLine("line0.1", "#FF0000", 8, canvasWidth - mouseX, canvasHeight - mouseY, mouseX, mouseY);
+      drawLine("line1.0", "#FF0000", 8, canvasWidth - mouseX, canvasHeight - mouseY, mouseX, mouseY);
+      drawLine("line1.1", "#FF0000", 8, canvasWidth - mouseX, canvasHeight - mouseY, mouseX, mouseY);
+
+		}
+	}
+
+ // setCanvasPositions();
+  draw();
+
+</script>
