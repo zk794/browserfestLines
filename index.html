@@ -84,9 +84,9 @@
     ctx.beginPath();
   }
 
-  function drawLine(lineID, color, lineWid, x1, y1, x2, y2) {
+  function drawLine(lStruct, color, lineWid, x1, y1, x2, y2) {
 
-    let c = document.getElementById(lineID);
+    let c = document.getElementById(lStruct.canvasID);
     let ctx = c.getContext("2d");
     initCanvas(c, ctx);
     ctx.strokeStyle = color;
@@ -94,6 +94,32 @@
     ctx.lineTo(x2, y2);
     ctx.lineWidth = lineWid;
     ctx.stroke();
+  }
+
+  function pointToCursor(lStruct) {
+    let canX = lStruct.xpos;
+    let canY = lStruct.ypos;
+    let rightEdgeX = canX + canvasWidth;
+    let rightEdgeY = canY + canvasHeight;
+
+    let x1 = mouseX - canX;
+    let y1 = mouseY - canY;
+    let x2 = rightEdgeX - mouseX;
+    let y2 = rightEdgeY - mouseY;
+    drawLine(lStruct,"#FF0000", 8, x1, y1, x2, y2);
+  }
+
+  function accident(lStruct) { // error when I was making pointToCursor but it might be cool
+    let canX = lStruct.xpos;
+    let canY = lStruct.ypos;
+    let centerCanX = canX + (canvasWidth/2);
+    let centerCanY = canY + (canvasHeight/2);
+
+    let x1 = mouseX - canX;
+    let y1 = mouseY - canY;
+    let x2 = canvasWidth - x1;
+    let y2 = canvasHeight - x2;
+    drawLine(lStruct,"#FF0000", 8, x1, y1, x2, y2);
   }
 
 
@@ -107,13 +133,14 @@
 			await sleep(20);
 
       for (let i=0; i<numRows*numCols; i++) {
-        drawLine(linesArr[i].canvasID, "#FF0000", 8, canvasWidth - mouseX, canvasHeight - mouseY, mouseX, mouseY);
+        pointToCursor(linesArr[i]);
       }
 
 		}
 	}
 
   setCanvasPositions();
+  console.log(linesArr);
   draw();
 
 </script>
