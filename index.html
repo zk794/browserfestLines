@@ -29,41 +29,46 @@
 
 <script>
 
- /* function lineStruct(canvasID, xpos, ypos) {
+  function lineStruct(canvasID, xpos, ypos) {
     this.canvasID = canvasID;
     this.xpos = xpos;
     this.ypos = ypos;
-  }*/
+  }
 
   let canvasWidth = 100;
   let canvasHeight = 100;
   let numRows = 2;
- /*  let numCols = 2;
+  let numCols = 2;
+
 
   let linesArr = [];
+
   for (let r=0; r<numRows; r++) {
     for (let c=0; c<numCols; c++) {
-      linesArr[r*numCols + c] = new Object();
-      linesArr[r*numCols + c].canvasID = "line"+r.toString()+"."+c.toString();
-     // linesArr.push(new lineStruct("line"+r.toString()+"."+c.toString(), 0, 0));
-      console.log(linesArr[r*numCols + c]);
+      newID = "line"+r+"."+c;
+      newLineStruct = new lineStruct(newID, 0, 0);
+      linesArr.push(newLineStruct);
     }
-  }*/
+  }
 
-/*  function setCanvasPositions() {
+  function setCanvasPositions() {
     for (let r=0; r<numRows; r++) {
       for (let c=0; c<numCols; c++) {
-        let can = document.getElementById(linesArr[r*numCols + c]);
-        let xpos = c*canvasWidth;
-        let xString = xpos.toString();
-        let ypos = r*canvasHeight;
-        let yString = ypos.toString();
+        let can = document.getElementById(linesArr[r*numCols + c].canvasID);
+        let xpos1 = c*canvasWidth;
+        let xString = xpos1.toString();
+        let ypos1 = r*canvasHeight;
+        let yString = ypos1.toString();
         can.style.top = yString+"px";
         can.style.left = xString+"px";
+        can.style.position = "absolute";
+
+        linesArr[r*numCols + c].xpos = xpos1;
+        linesArr[r*numCols + c].ypos = ypos1;
       }
     }
   }
-  */
+
   let mouseX;
   let mouseY;
 
@@ -71,7 +76,7 @@
     document.addEventListener("mousemove", (event) => {
     mouseX = event.clientX;
     mouseY = event.clientY;
-    console.log("x: " + mouseX + " y: " + mouseY);
+    //console.log("x: " + mouseX + " y: " + mouseY);
   });
 
   function initCanvas(c, ctx) {
@@ -101,15 +106,14 @@
 		{
 			await sleep(20);
 
-			drawLine("line0.0", "#FF0000", 8, canvasWidth - mouseX, canvasHeight - mouseY, mouseX, mouseY);
-      drawLine("line0.1", "#FF0000", 8, canvasWidth - mouseX, canvasHeight - mouseY, mouseX, mouseY);
-      drawLine("line1.0", "#FF0000", 8, canvasWidth - mouseX, canvasHeight - mouseY, mouseX, mouseY);
-      drawLine("line1.1", "#FF0000", 8, canvasWidth - mouseX, canvasHeight - mouseY, mouseX, mouseY);
+      for (let i=0; i<numRows*numCols; i++) {
+        drawLine(linesArr[i].canvasID, "#FF0000", 8, canvasWidth - mouseX, canvasHeight - mouseY, mouseX, mouseY);
+      }
 
 		}
 	}
 
- // setCanvasPositions();
+  setCanvasPositions();
   draw();
 
 </script>
