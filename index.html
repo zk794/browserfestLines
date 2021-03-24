@@ -16,11 +16,47 @@
   </head>
   <body>
 
-    <canvas id="line0.0" class="line-canvas" height="100px" width="100px" style="border:1px solid #d3d3d3;"></canvas>
-    <canvas id="line0.1" class="line-canvas" height="100px" width="100px" style="border:1px solid #d3d3d3;"></canvas>
+    <canvas id="line0.0" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line0.1" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line0.2" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line0.3" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line0.4" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line0.5" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
 
-    <canvas id="line1.0" class="line-canvas" height="100px" width="100px" style="border:1px solid #d3d3d3;"></canvas>
-    <canvas id="line1.1" class="line-canvas" height="100px" width="100px" style="border:1px solid #d3d3d3;"></canvas>
+    <canvas id="line1.0" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line1.1" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line1.2" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line1.3" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line1.4" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line1.5" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+
+    <canvas id="line2.0" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line2.1" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line2.2" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line2.3" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line2.4" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line2.5" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+
+    <canvas id="line3.0" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line3.1" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line3.2" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line3.3" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line3.4" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line3.5" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+
+    <canvas id="line4.0" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line4.1" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line4.2" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line4.3" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line4.4" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line4.5" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+
+    <canvas id="line5.0" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line5.1" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line5.2" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line5.3" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line5.4" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line5.5" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
 
   </body>
 
@@ -37,8 +73,8 @@
 
   let canvasWidth = 100;
   let canvasHeight = 100;
-  let numRows = 2;
-  let numCols = 2;
+  let numRows = 6;
+  let numCols = 6;
 
 
   let linesArr = [];
@@ -134,6 +170,7 @@
 
       for (let i=0; i<numRows*numCols; i++) {
         pointToCursor(linesArr[i]);
+        //accident(linesArr[i]);
       }
 
 		}
