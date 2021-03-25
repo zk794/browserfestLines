@@ -31,7 +31,7 @@
     <canvas id="line1.5" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
 
     <canvas id="line2.0" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
-    <canvas id="line2.1" height="100px" width="100px" style="border:1px solid #d3d3d3;"></canvas>
+    <canvas id="line2.1" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
     <canvas id="line2.2" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
     <canvas id="line2.3" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
     <canvas id="line2.4" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
@@ -64,21 +64,27 @@
 
 
 <script>
-  // CANVAS, LINE, AND MOUSE FUNCTIONS
+  /* CANVAS, LINE, AND MOUSE SETUP
+    =====================================================================
+  */
+
+  let canvasWidth = 100;
+  let canvasHeight = 100;
+
+  let numRows = 6;
+  let numCols = 6;
+
+  let lineWidth = 8;
+  let linesArr = [];
+
+  let mouseX;
+  let mouseY;
 
   function lineStruct(canvasID, xpos, ypos) {
     this.canvasID = canvasID;
     this.xpos = xpos;
     this.ypos = ypos;
   }
-
-  let canvasWidth = 100;
-  let canvasHeight = 100;
-  let numRows = 6;
-  let numCols = 6;
-  let lineWidth = 8;
-
-  let linesArr = [];
 
   // returns the index of the element at row, col
   function getIndex(r, c) {
@@ -121,16 +127,15 @@
     ctx.beginPath();
   }
 
-  let mouseX;
-  let mouseY;
-
   // retrieves the mouse coordinates
   document.addEventListener("mousemove", (event) => {
     mouseX = event.clientX;
     mouseY = event.clientY;
   });
 
-  // LINE FUNCTIONS
+  /* LINE / LINE COLOR 
+    ===================================================================
+  */
 
   function drawLine(lStruct, color, lineWid, x1, y1, x2, y2) {
     let c = document.getElementById(lStruct.canvasID);
@@ -172,7 +177,11 @@
     return "hsl(" + hue + ", 50%, 50%)";
   }
 
-  function pointToCursor0(lStruct) {
+  /* PATTERNS
+    =======================================================================
+  */
+
+  function pattern0(lStruct) {
     let topLeftX = lStruct.xpos;
     let topLeftY = lStruct.ypos;
     let bottomRightX = topLeftX + canvasWidth;
@@ -189,7 +198,7 @@
     drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
   }
 
-  function pointToCursor1(lStruct) {
+  function pattern1(lStruct) {
     let topLeftX = lStruct.xpos;
     let topLeftY = lStruct.ypos;
 
@@ -203,6 +212,8 @@
     drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
   }
 
+
+  // pattern 2 helper functions:
   // returns true if mouse is inside of the struct inputted
   function mouseInCanvas(lStruct) {
     return (mouseX >= lStruct.xpos) && (mouseX <= lStruct.xpos+canvasWidth)
@@ -219,7 +230,7 @@
     return (mouseX >= lStruct.xpos) && (mouseX <= lStruct.xpos+canvasWidth);
   }
 
-  function newPattern(lStruct) {
+  function pattern2(lStruct) {
     let centerX = lStruct.xpos + (canvasWidth/2);
     let centerY = lStruct.ypos + (canvasHeight/2);
 
@@ -233,28 +244,29 @@
       x2 = x1;
       y1 = lStruct.ypos - 20;
       y2 = y1;
-    } else if (mouseInRow(lStruct)) {
-      x1 = lStruct.xpos;
-      x2 = x1 + canvasWidth;
-      y1 = lStruct.ypos + (canvasHeight/2);
-      y2 = y1;
-      console.log(lStruct.canvasID+": "+x1+", "+y1+"; "+x2+", "+y2);
-    } else if (mouseInCol(lStruct)) {
-      x1 = lStruct.xpos + (canvasWidth/2);
-      x2 = x1;
-      y1 = lStruct.ypos;
-      y2 = y1 + canvasHeight;
-      console.log(lStruct.canvasID+": "+x1+", "+y1+"; "+x2+", "+y2);
-    } /*else {
-      if (mouseY > centerY) {
-        y1 = canvasHeight * numRows;
-      } else {
-        y1 = 0;
-      }
-      x1 = mouseX;
-      x2 = lStruct.xpos + canvasWidth - mouseX;
-      y2 = lStruct.ypos + canvasHeight - mouseY;
-    }*/
+    } 
+    else if (mouseInRow(lStruct)) {
+      x1 = 0;
+      y1 = canvasHeight / 2;
+      x2 = canvasWidth;
+      y2 = canvasHeight / 2;
+    } 
+    else if (mouseInCol(lStruct)) {
+      x1 = canvasWidth / 2;
+      y1 = 0;
+      x2 = canvasWidth / 2;
+      y2 = canvasHeight;
+    } 
+    // else {
+    //   if (mouseY > centerY) {
+    //     y1 = canvasHeight * numRows;
+    //   } else {
+    //     y1 = 0;
+    //   }
+    //   x1 = mouseX;
+    //   x2 = lStruct.xpos + canvasWidth - mouseX;
+    //   y2 = lStruct.ypos + canvasHeight - mouseY;
+    // }
 
     // let color = getRainbowLineColor0(mouseX, mouseY);
     let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
@@ -262,7 +274,9 @@
   }
 
 
-  // DRAW LOOP
+  /* DRAW LOOP
+    =======================================================================
+  */
   const sleep = (ms) => {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
@@ -273,14 +287,10 @@
 			await sleep(20);
 
       for (let i=0; i<numRows*numCols; i++) {
-        // pointToCursor0(linesArr[i]);
-        //pointToCursor1(linesArr[i]);
-        newPattern(linesArr[i]);
+        // pattern0(linesArr[i]);
+        //pattern1(linesArr[i]);
+        pattern2(linesArr[i]);
       }
-     /* console.log("in row 0,0: "+mouseInRow(linesArr[getIndex(0,0)]));
-      console.log("in col 0,0: "+mouseInCol(linesArr[getIndex(0,0)]));
-      console.log("in row 2,1: "+mouseInRow(linesArr[getIndex(2,1)]));
-      console.log("in col 2,1: "+mouseInCol(linesArr[getIndex(2,1)]));*/
 
 		}
 	}
