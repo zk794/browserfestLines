@@ -16,7 +16,7 @@
   </head>
   <body>
 
-    <canvas id="line0.0" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <!-- <canvas id="line0.0" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
     <canvas id="line0.1" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
     <canvas id="line0.2" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
     <canvas id="line0.3" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
@@ -56,7 +56,49 @@
     <canvas id="line5.2" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
     <canvas id="line5.3" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
     <canvas id="line5.4" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
-    <canvas id="line5.5" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line5.5" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas> -->
+
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
 
   </body>
 
@@ -72,6 +114,8 @@
     this.ypos = ypos;
   }
 
+  // generate canvases
+
   let canvasWidth = 100;
   let canvasHeight = 100;
   let numRows = 6;
@@ -83,6 +127,40 @@
   function getIndex(r, c) {
     return r * numCols + c;
   }
+
+  // TODO: function that determines numRows and numCols
+
+  // adds canvases to the HTML
+  function generateCanvases() {
+    let numCanvases = numRows * numCols;
+
+    // // add canvases to HTML
+    // for(let i = 0; i < numCanvases; i++) {
+    //   document.createElement("canvas");
+    // }
+
+    // retrieve canvases from document
+    const canvasArray = document.getElementsByTagName("canvas");
+    console.log(canvasArray.length);
+
+    // update canvas properties
+    for(let r = 0; r < numRows; r++) {
+
+      for(let c = 0; c < numCols; c++) {
+        let i = getIndex(r, c);
+
+        canvasArray[i].id = "line" + r + "." + c;
+        canvasArray[i].width = canvasWidth;
+        canvasArray[i].height = canvasHeight;
+        canvasArray[i].style.border = "0px";
+        console.log(canvasArray[i]);
+      }
+
+    }
+
+  }
+
+  generateCanvases();
 
   // populates the linesArr
   for (let r=0; r<numRows; r++) {
