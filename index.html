@@ -31,7 +31,7 @@
     <canvas id="line1.5" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
 
     <canvas id="line2.0" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
-    <canvas id="line2.1" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
+    <canvas id="line2.1" height="100px" width="100px" style="border:1px solid #d3d3d3;"></canvas>
     <canvas id="line2.2" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
     <canvas id="line2.3" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
     <canvas id="line2.4" height="100px" width="100px" style="border:0px solid #d3d3d3;"></canvas>
@@ -76,6 +76,7 @@
   let canvasHeight = 100;
   let numRows = 6;
   let numCols = 6;
+  let lineWidth = 8;
 
   let linesArr = [];
 
@@ -147,27 +148,27 @@
     let hue = (changeFactor * mouseX) + (changeFactor * mouseY) % 360;
     let col = "hsl(" + hue + ", 50%, 50%)";
 
-    return col;    
+    return col;
   }
 
   function getRainbowLineColor1(lStruct, mouseX, mouseY) {
     // retrieve the id of given lStruct
     let id = lStruct.canvasID;
-    
+
     // parse id to retrieve index value
     let idArray = id.split("line")[1].split(".");
     let r = parseInt(idArray[0], 10);
     let c = parseInt(idArray[1], 10);
     let index = getIndex(r, c);
-    
+
     // "spread out" hue values amongst the canvas cells
     let numCells = numRows * numCols;
     let hue = index * (360 / numCells);
-    
+
     // have hue change as mouse moves
     let changeFactor = 0.5;
     hue = (hue + (changeFactor * mouseX) + (changeFactor * mouseY)) % 360;
-    
+
     return "hsl(" + hue + ", 50%, 50%)";
   }
 
@@ -185,7 +186,7 @@
     // let color = getRainbowLineColor0(mouseX, mouseY);
     let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
     console.log(color);
-    drawLine(lStruct, color, 8, x1, y1, x2, y2);
+    drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
   }
 
   function pointToCursor1(lStruct) {
@@ -196,6 +197,64 @@
     let y1 = mouseY - topLeftY;
     let x2 = canvasWidth - x1;
     let y2 = canvasHeight - x2;
+
+    // let color = getRainbowLineColor0(mouseX, mouseY);
+    let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
+    drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
+  }
+
+  // returns true if mouse is inside of the struct inputted
+  function mouseInCanvas(lStruct) {
+    return (mouseX >= lStruct.xpos) && (mouseX <= lStruct.xpos+canvasWidth)
+        && (mouseY >= lStruct.ypos) && (mouseY <= lStruct.ypos+canvasHeight);
+  }
+
+  // returns true if mouse is in a square in the row of the inputted canvas
+  function mouseInRow(lStruct) {
+    return (mouseY >= lStruct.ypos) && (mouseY <= lStruct.ypos+canvasHeight);
+  }
+
+  // returns true if mouse is in a square in the column of the inputted canvas
+  function mouseInCol(lStruct) {
+    return (mouseX >= lStruct.xpos) && (mouseX <= lStruct.xpos+canvasWidth);
+  }
+
+  function newPattern(lStruct) {
+    let centerX = lStruct.xpos + (canvasWidth/2);
+    let centerY = lStruct.ypos + (canvasHeight/2);
+
+    let x1 = 0;
+    let y1 = 0;
+    let x2 = 0;
+    let y2 = 0;
+
+    if (mouseInCanvas(lStruct)) {
+      x1 = lStruct.xpos - 20;
+      x2 = x1;
+      y1 = lStruct.ypos - 20;
+      y2 = y1;
+    } else if (mouseInRow(lStruct)) {
+      x1 = lStruct.xpos;
+      x2 = x1 + canvasWidth;
+      y1 = lStruct.ypos + (canvasHeight/2);
+      y2 = y1;
+      console.log(lStruct.canvasID+": "+x1+", "+y1+"; "+x2+", "+y2);
+    } else if (mouseInCol(lStruct)) {
+      x1 = lStruct.xpos + (canvasWidth/2);
+      x2 = x1;
+      y1 = lStruct.ypos;
+      y2 = y1 + canvasHeight;
+      console.log(lStruct.canvasID+": "+x1+", "+y1+"; "+x2+", "+y2);
+    } /*else {
+      if (mouseY > centerY) {
+        y1 = canvasHeight * numRows;
+      } else {
+        y1 = 0;
+      }
+      x1 = mouseX;
+      x2 = lStruct.xpos + canvasWidth - mouseX;
+      y2 = lStruct.ypos + canvasHeight - mouseY;
+    }*/
 
     // let color = getRainbowLineColor0(mouseX, mouseY);
     let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
@@ -215,8 +274,13 @@
 
       for (let i=0; i<numRows*numCols; i++) {
         // pointToCursor0(linesArr[i]);
-        pointToCursor1(linesArr[i]);
+        //pointToCursor1(linesArr[i]);
+        newPattern(linesArr[i]);
       }
+     /* console.log("in row 0,0: "+mouseInRow(linesArr[getIndex(0,0)]));
+      console.log("in col 0,0: "+mouseInCol(linesArr[getIndex(0,0)]));
+      console.log("in row 2,1: "+mouseInRow(linesArr[getIndex(2,1)]));
+      console.log("in col 2,1: "+mouseInCol(linesArr[getIndex(2,1)]));*/
 
 		}
 	}
