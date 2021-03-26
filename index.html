@@ -215,9 +215,6 @@
     let x2 = bottomRightX - mouseX;
     let y2 = bottomRightY - mouseY;
 
-    let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
-    drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
-
     let centerX = (canvasWidth/2);
     let centerY = (canvasHeight/2);
     let x3 = x1 - centerX;
@@ -234,7 +231,7 @@
     y3 = y3 + centerY;
     x4 = x4 + centerX;
     y4 = y4 + centerY;
-//    let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
+    let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
     drawLine(lStruct, color, lineWidth, x3, y3, x4, y4);
   }
 
