@@ -133,7 +133,7 @@
     mouseY = event.clientY;
   });
 
-  /* LINE / LINE COLOR 
+  /* LINE / LINE COLOR
     ===================================================================
   */
 
@@ -181,6 +181,7 @@
     =======================================================================
   */
 
+  // point to mouse
   function pattern0(lStruct) {
     let topLeftX = lStruct.xpos;
     let topLeftY = lStruct.ypos;
@@ -198,6 +199,7 @@
     drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
   }
 
+  // point to mouse along diagonal ("broken mirror")
   function pattern1(lStruct) {
     let topLeftX = lStruct.xpos;
     let topLeftY = lStruct.ypos;
@@ -231,8 +233,8 @@
   }
 
   function pattern2(lStruct) {
-    let centerX = lStruct.xpos + (canvasWidth/2);
-    let centerY = lStruct.ypos + (canvasHeight/2);
+    let centerX = (canvasWidth/2);
+    let centerY = (canvasHeight/2);
 
     let x1 = 0;
     let y1 = 0;
@@ -244,28 +246,28 @@
       x2 = x1;
       y1 = lStruct.ypos - 20;
       y2 = y1;
-    } 
+    }
     else if (mouseInRow(lStruct)) {
       x1 = 0;
       y1 = canvasHeight / 2;
       x2 = canvasWidth;
       y2 = canvasHeight / 2;
-    } 
+    }
     else if (mouseInCol(lStruct)) {
       x1 = canvasWidth / 2;
       y1 = 0;
       x2 = canvasWidth / 2;
       y2 = canvasHeight;
-    } 
+    }
     // else {
     //   if (mouseY > centerY) {
-    //     y1 = canvasHeight * numRows;
+    //     y1 = mouseY + 10000;
     //   } else {
-    //     y1 = 0;
+    //     y1 = mouseY - 10000;
     //   }
     //   x1 = mouseX;
-    //   x2 = lStruct.xpos + canvasWidth - mouseX;
-    //   y2 = lStruct.ypos + canvasHeight - mouseY;
+    //   x2 = canvasWidth - mouseX;
+    //   y2 = canvasHeight - mouseY;
     // }
 
     // let color = getRainbowLineColor0(mouseX, mouseY);
