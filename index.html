@@ -203,6 +203,41 @@
     drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
   }
 
+  // perpendicular to pointToCursor0
+  function circleLines(lStruct) {
+    let topLeftX = lStruct.xpos;
+    let topLeftY = lStruct.ypos;
+    let bottomRightX = topLeftX + canvasWidth;
+    let bottomRightY = topLeftY + canvasHeight;
+
+    let x1 = mouseX - topLeftX;
+    let y1 = mouseY - topLeftY;
+    let x2 = bottomRightX - mouseX;
+    let y2 = bottomRightY - mouseY;
+
+    let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
+    drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
+
+    let centerX = (canvasWidth/2);
+    let centerY = (canvasHeight/2);
+    let x3 = x1 - centerX;
+    let y3 = y1 - centerY;
+    let x4 = x2 - centerX;
+    let y4 = y2 - centerY;
+    let tempx3 = x3;
+    x3 = y3 * -1;
+    y3 = tempx3;
+    let tempx4 = x4;
+    x4 = y4 * -1;
+    y4 = tempx4;
+    x3 = x3 + centerX;
+    y3 = y3 + centerY;
+    x4 = x4 + centerX;
+    y4 = y4 + centerY;
+//    let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
+    drawLine(lStruct, color, lineWidth, x3, y3, x4, y4);
+  }
+
   // returns true if mouse is inside of the struct inputted
   function mouseInCanvas(lStruct) {
     return (mouseX >= lStruct.xpos) && (mouseX <= lStruct.xpos+canvasWidth)
@@ -275,7 +310,8 @@
       for (let i=0; i<numRows*numCols; i++) {
         // pointToCursor0(linesArr[i]);
         //pointToCursor1(linesArr[i]);
-        newPattern(linesArr[i]);
+       // newPattern(linesArr[i]);
+       circleLines(linesArr[i]);
       }
      /* console.log("in row 0,0: "+mouseInRow(linesArr[getIndex(0,0)]));
       console.log("in col 0,0: "+mouseInCol(linesArr[getIndex(0,0)]));
