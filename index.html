@@ -148,7 +148,7 @@
     ctx.stroke();
   }
 
-  function getRainbowLineColor0(mouseX, mouseY) {
+  function getRainbowLineColor0(lStruct, mouseX, mouseY) {
     let changeFactor = 0.5;
     let hue = (changeFactor * mouseX) + (changeFactor * mouseY) % 360;
     let col = "hsl(" + hue + ", 50%, 50%)";
@@ -177,12 +177,31 @@
     return "hsl(" + hue + ", 50%, 50%)";
   }
 
+  /* KEYBOARD INPUT
+    =======================================================================
+  */
+  let patternFunction = pointToCursorPattern;
+  let colorFunction = getRainbowLineColor0;
+
+  document.addEventListener('keydown', function(event) {
+    if(event.keyCode == 81) { // q
+        patternFunction = pointToCursorPattern;
+    } else if(event.keyCode == 87) { // w
+        patternFunction = pointToCursorDiagonalPattern;
+    } else if(event.keyCode == 69) { // e
+        patternFunction = slopeFieldPattern;
+    } else if(event.keyCode == 65) { // a
+        colorFunction = getRainbowLineColor0;
+    } else if(event.keyCode == 83) { // s
+        colorFunction = getRainbowLineColor1;
+    }
+  });
+
   /* PATTERNS
     =======================================================================
   */
 
-  // point to mouse
-  function pattern0(lStruct) {
+  function pointToCursorPattern(lStruct) {
     let topLeftX = lStruct.xpos;
     let topLeftY = lStruct.ypos;
     let bottomRightX = topLeftX + canvasWidth;
@@ -193,14 +212,12 @@
     let x2 = bottomRightX - mouseX;
     let y2 = bottomRightY - mouseY;
 
-    // let color = getRainbowLineColor0(mouseX, mouseY);
-    let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
-    console.log(color);
+    let color = colorFunction(lStruct, mouseX, mouseY);
     drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
   }
 
   // point to mouse along diagonal ("broken mirror")
-  function pattern1(lStruct) {
+  function pointToCursorDiagonalPattern(lStruct) {
     let topLeftX = lStruct.xpos;
     let topLeftY = lStruct.ypos;
 
@@ -209,8 +226,7 @@
     let x2 = canvasWidth - x1;
     let y2 = canvasHeight - x2;
 
-    // let color = getRainbowLineColor0(mouseX, mouseY);
-    let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
+    let color = colorFunction(lStruct, mouseX, mouseY);
     drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
   }
 
@@ -242,7 +258,7 @@
     y3 = y3 + centerY;
     x4 = x4 + centerX;
     y4 = y4 + centerY;
-    let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
+    let color = colorFunction(lStruct, mouseX, mouseY);
     drawLine(lStruct, color, lineWidth, x3, y3, x4, y4);
   }
 
@@ -303,8 +319,7 @@
     //   circleLines(lStruct);
     // }
 
-    // let color = getRainbowLineColor0(mouseX, mouseY);
-    let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
+    let color = colorFunction(lStruct, mouseX, mouseY);
     drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
   }
 
@@ -318,8 +333,7 @@
     x2 = canvasWidth;
     y2 = slope*(x2-midptx) + midpty;
 
-    // let color = getRainbowLineColor0(mouseX, mouseY);
-    let color = getRainbowLineColor1(lStruct, mouseX, mouseY);
+    let color = colorFunction(lStruct, mouseX, mouseY);
     drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
     //drawLine(lStruct, color, lineWidth, x1, y1, midptx, midpty);
   }
@@ -338,12 +352,7 @@
 			await sleep(20);
 
       for (let i=0; i<numRows*numCols; i++) {
-         //pattern0(linesArr[i]);
-        //pointToCursor1(linesArr[i]);
-       // newPattern(linesArr[i]);
-       //circleLines(linesArr[i]);
-       // pattern2(linesArr[i]);
-       slopeFieldPattern(linesArr[i]);
+         patternFunction(linesArr[i]);
       }
 
 		}
