@@ -215,7 +215,7 @@
   }
 
   // perpendicular to pointToCursor0
-  function circleLines(lStruct) {
+  function circleLinesPattern(lStruct) {
     let topLeftX = lStruct.xpos;
     let topLeftY = lStruct.ypos;
     let bottomRightX = topLeftX + canvasWidth;
@@ -319,10 +319,11 @@
 			await sleep(20);
 
       for (let i=0; i<numRows*numCols; i++) {
-         pattern0(linesArr[i]);
-        //pointToCursor1(linesArr[i]);
-       // newPattern(linesArr[i]);
-       //circleLines(linesArr[i]);
+        pattern0(linesArr[i]);
+        // pattern2(linesArr[i]);
+        // pointToCursor1(linesArr[i]);
+        // newPattern(linesArr[i]);
+        // circleLinesPattern(linesArr[i]);
       }
 
 		}
