@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
   </head>
-  <body>
+  <body onload="popUp()">
 
     <div id="canvas-wrapper"></div>
 
@@ -337,6 +337,14 @@
     let color = colorFunction(lStruct, mouseX, mouseY);
     drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
     //drawLine(lStruct, color, lineWidth, x1, y1, midptx, midpty);
+  }
+
+  /* popup on load
+    =======================================================================
+  */
+
+  function popUp() {
+    alert("Welcome to the Line Field! \nLeft-hand-side keyboard buttons will change what you see!");
   }
 
 
