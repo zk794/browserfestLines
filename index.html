@@ -1,3 +1,5 @@
+<!-- Project by Zoa Katok and Grace Wang -->
+
 <style>
   body {
     overflow: hidden;
@@ -187,6 +189,10 @@
         patternFunction = pointToCursorDiagonalPattern;
     } else if(event.keyCode == 69) { // e
         patternFunction = slopeFieldPattern;
+    } else if(event.keyCode == 82) { // r
+        patternFunction = circleLinesPattern;
+    // } else if(event.keyCode == 84) { // t
+    //     patternFunction = slopeFieldPattern2;
     } else if(event.keyCode == 65) { // a
         colorFunction = getRainbowLineColor0;
     } else if(event.keyCode == 83) { // s
@@ -260,6 +266,21 @@
     drawLine(lStruct, color, lineWidth, x3, y3, x4, y4);
   }
 
+  function slopeFieldPattern(lStruct) {
+
+    midptx = canvasWidth/2;
+    midpty = canvasHeight/2;
+    slope = 2*(lStruct.xpos+midptx - mouseX) / (lStruct.ypos+midpty - mouseY);
+    x1 = 0;
+    y1 = slope*(x1-midptx) + midpty;
+    x2 = canvasWidth;
+    y2 = slope*(x2-midptx) + midpty;
+
+    let color = colorFunction(lStruct, mouseX, mouseY);
+    drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
+    //drawLine(lStruct, color, lineWidth, x1, y1, midptx, midpty);
+  }
+
   // returns true if mouse is inside of the struct inputted
   function mouseInCanvas(lStruct) {
     return (mouseX >= lStruct.xpos) && (mouseX <= lStruct.xpos+canvasWidth)
@@ -322,21 +343,6 @@
 
     let color = colorFunction(lStruct, mouseX, mouseY);
     drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
-  }
-
-  function slopeFieldPattern(lStruct) {
-
-    midptx = canvasWidth/2;
-    midpty = canvasHeight/2;
-    slope = 2*(lStruct.xpos+midptx - mouseX) / (lStruct.ypos+midpty - mouseY);
-    x1 = 0;
-    y1 = slope*(x1-midptx) + midpty;
-    x2 = canvasWidth;
-    y2 = slope*(x2-midptx) + midpty;
-
-    let color = colorFunction(lStruct, mouseX, mouseY);
-    drawLine(lStruct, color, lineWidth, x1, y1, x2, y2);
-    //drawLine(lStruct, color, lineWidth, x1, y1, midptx, midpty);
   }
 
   /* popup on load
